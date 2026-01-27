@@ -1,14 +1,14 @@
 from SCC import strongly_connected_components
+from typing import Any
 
-def condensation_native(G, scc=None):
-    # 如果没有提供 SCC，则调用之前写好的原生 SCC 算法
-    if scc is None:
-        scc = list(strongly_connected_components(G))
+def condense(G: dict[Any, dict[Any, dict[str, Any]]]):
+    scc = list(strongly_connected_components(G))    # 强连通分量列表
     
     mapping = {}    # 原节点 -> SCC 编号的映射
     members = {}    # SCC 编号 -> 原节点集合的映射
     
     for i, component in enumerate(scc):
+        # 遍历所有强连通分量，建立映射关系
         members[i] = set(component)
         for node in component:
             mapping[node] = i
@@ -23,8 +23,7 @@ def condensation_native(G, scc=None):
             if u_scc != v_scc:
                 condensation[u_scc].add(v_scc)
 
-    C = {k: list(v) for k, v in condensation.items()}
-
+    C = condensation
     return {
         "adj": C,      # 缩点后的邻接表
         "mapping": mapping,    # 原始映射表
