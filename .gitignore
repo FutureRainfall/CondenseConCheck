@@ -209,3 +209,6 @@ __marimo__/
 # VSCode folder
 .history/
 .vscode/
+
+# Others
+test_results_*.png
