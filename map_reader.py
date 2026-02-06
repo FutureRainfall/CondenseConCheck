@@ -2,7 +2,12 @@ from pathlib import Path
 import pandas as pd
 from typing import Any
 
-def read_from_excel(filepath: str, scale = 1, alt=False):
+def read_from_excel(filepath: str, alt=False):
+    '''
+        :param filepath: str, 文件路径
+        :param alt: bool, 是否使用备选方案，切换 100Sim-4.xlsx 和 Ohtc-Map-15.xlsx
+        :return G: dict[str, dict[str, dict[str, Any]]], 图的邻接表表示
+    '''
     def read_excel(filepath: str):
         try:
             file_path = Path(filepath)
@@ -19,7 +24,7 @@ def read_from_excel(filepath: str, scale = 1, alt=False):
         node_label = 'map_point_data'
         node_id_row = 'PointCode'
         edge_label = 'map_segment_data'
-        edge_type = 'type'
+        edge_type = 'Type'
         edge_start = 'StartPointCode'
         edge_end = 'EndPointCode'
         weight_row = 'Weight'
@@ -69,4 +74,6 @@ def _repr(G: dict[Any, dict[Any, dict[str, Any]]]) -> str:
     
 if __name__ == "__main__":
     G = read_from_excel('100Sim-4.xlsx', alt=False)
+    print(len(G))
+    assert False
     print(_repr(G))
